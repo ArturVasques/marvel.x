@@ -16,8 +16,13 @@
             </router-link>
           </li>
           <li class="menu-item">
-            <router-link class="router-link menu-link" to="/heroes">
+            <router-link class="router-link menu-link" to="/series">
               <span>Series</span>
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link class="router-link menu-link" to="/comics">
+              <span>Comics</span>
             </router-link>
           </li>
         </ul>
@@ -31,6 +36,8 @@ export default {};
 </script>
 
 <style scoped>
+/* Marvel Color Pallete */
+/* https://www.color-hex.com/color-palette/6563 */
 .header {
   background-color: #000000;
 }

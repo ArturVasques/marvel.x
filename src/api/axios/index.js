@@ -17,17 +17,12 @@ const GetHeroes = () => {
   return instance.get(`/characters${keys}`).then( res => res.data);
 };
 
-const GetHeroeImage = (link) => {
-  // Example https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/portrait_small.jpg
-  // Possible Sizes
-  // portrait_small	50x75px
-  // portrait_medium	100x150px
-  // portrait_xlarge	150x225px
-  // portrait_fantastic	168x252px
-  // portrait_uncanny	300x450px
-  // portrait_incredible 216x324px
-  const sizeMedium = 'portrait_medium.jpg';
-  return instance.get(`${link}/${sizeMedium}`);
+const GetSeries = () => {
+  return instance.get(`/series${keys}`).then( res => res.data);
 }
 
-export default { GetHeroes, GetHeroeImage };
+const GetComics = () => {
+  return instance.get(`/comics${keys}`).then( res => res.data);
+}
+
+export default { GetHeroes, GetSeries, GetComics };
