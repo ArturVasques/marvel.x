@@ -1,16 +1,19 @@
 <template>
-  <div class="container">
-    <Heroes />
+  <div>
+    <Header />
+    <Body />
   </div>
 </template>
 
 <script>
-import Heroes from "./components/Heroes.vue";
+import Header from "./components/ui/Header.vue";
+import Body from "./components/ui/Body.vue";
 
 export default {
   name: "App",
   components: {
-    Heroes,
+    Header,
+    Body
   },
 };
 </script>
