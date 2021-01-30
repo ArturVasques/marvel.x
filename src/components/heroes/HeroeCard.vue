@@ -26,7 +26,6 @@ export default {
       return `${path}/${imgSize}`;
     },
     getDescription(description) {
-        console.log(description.length);
         if(description.length > 100) {
             return description.substring(0,100) + '[...]'
         } 

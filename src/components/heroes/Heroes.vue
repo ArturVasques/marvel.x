@@ -24,7 +24,6 @@ export default {
   methods: {
     getHeroes() {
       api.GetHeroes().then((res) => {
-        console.log(res.data.results);
         this.heroes = res.data.results;
       });
     },
