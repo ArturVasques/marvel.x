@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li v-for="heroe in heroes" :key="heroe.id">
-        <img :src="heroe.thumbnail.path + '/portrait_small.jpg'"/>
+        <img :src="heroe.thumbnail.path + '/portrait_small.' + heroe.thumbnail.extension"/>
         <p>Heroe Name: {{ heroe.name }}</p>
       </li>
     </ul>
