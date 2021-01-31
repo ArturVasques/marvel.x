@@ -16,10 +16,13 @@ export default {
   components: {
     Header,
     Body,
-    Loader
+    Loader,
   },
 };
 </script>
 
 <style>
+html {
+  height: 100%;
+}
 </style>

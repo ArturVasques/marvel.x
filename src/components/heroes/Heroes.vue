@@ -1,4 +1,5 @@
 <template>
+  <Title title="Heroes" />
   <div class="row">
     <div class="col-3 mb-5" v-for="heroe in heroes" :key="heroe.id">
       <Card
@@ -6,6 +7,7 @@
         :imgExtension="heroe.thumbnail.extension"
         :title="heroe.name"
         :description="heroe.description"
+        :relativePath="getRelativePath('heroes', heroe.id)"
       />
     </div>
     <div class="col-12" v-if="total > 0">
@@ -23,10 +25,19 @@
 import api from "../../api/axios";
 import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
+import utils from "../../utils";
+import Title from "../ui/Title";
 export default {
+  props: {
+    id: {
+      default: null,
+      type: Number,
+    },
+  },
   components: {
     Card,
     Pagination,
+    Title,
   },
   data() {
     return {
@@ -41,12 +52,12 @@ export default {
     this.getHeroes();
   },
   methods: {
+    getRelativePath: utils.getRelativePath,
     getHeroes() {
       this.$store.commit("loaderOn");
       api.GetHeroes(this.limit, this.offset).then((res) => {
         this.$store.commit("loaderOff");
         this.heroes = res.data.results;
-        console.log(res.data.results);
         this.total = res.data.total;
       });
     },

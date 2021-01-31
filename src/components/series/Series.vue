@@ -1,4 +1,5 @@
 <template>
+  <Title title="Series" />
   <div class="row">
     <div class="col-3 mb-5" v-for="serie in series" :key="serie.id">
       <Card
@@ -6,6 +7,8 @@
         :imgExtension="serie.thumbnail.extension"
         :title="serie.title"
         :description="serie.description"
+        :relativePath="getRelativePath('series', serie.id)"
+
       />
     </div>
     <div class="col-12" v-if="total > 0">
@@ -23,10 +26,19 @@
 import api from "../../api/axios";
 import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
+import utils from "../../utils";
+import Title from "../ui/Title";
 export default {
+  props: {
+    heroeId: {
+      default: null,
+      type: String,
+    },
+  },
   components: {
     Card,
     Pagination,
+    Title,
   },
   data() {
     return {
@@ -38,9 +50,13 @@ export default {
     };
   },
   mounted() {
-    this.getSeries();
+    this.initSeries();
   },
   methods: {
+    getRelativePath: utils.getRelativePath,
+    initSeries() {
+      this.heroeId ? this.getSeriesByHeroe(this.heroeId) : this.getSeries();
+    },
     getSeries() {
       this.$store.commit("loaderOn");
       api.GetSeries(this.limit, this.offset).then((res) => {
@@ -49,9 +65,17 @@ export default {
         this.total = res.data.total;
       });
     },
+    getSeriesByHeroe(id) {
+      this.$store.commit("loaderOn");
+      api.GetSeriesByHeroe(this.limit, this.offset, id).then((res) => {
+        this.$store.commit("loaderOff");
+        this.series = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
-      this.getSeries();
+      this.initSeries();
     },
   },
 };

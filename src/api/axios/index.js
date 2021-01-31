@@ -14,15 +14,51 @@ const instance = axios.create({
 instance.defaults.headers.common["Content-Type"] = "application/json";
 
 const GetHeroes = (limit, offset) => {
-  return instance.get(`/characters${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
+  return instance
+    .get(`/characters${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
+const GetHeroe = (id) => {
+  return instance.get(`/characters/${id}${keys}`).then((res) => res.data);
 };
 
 const GetSeries = (limit, offset) => {
-  return instance.get(`/series${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
-}
+  return instance
+    .get(`/series${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
+const GetSerie = (id) => {
+  return instance
+    .get(`/series/${id}${keys}`)
+    .then((res) => res.data);
+};
+
+const GetSeriesByHeroe = (limit, offset, id) => {
+  return instance
+    .get(`/characters/${id}/series${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
 
 const GetComics = (limit, offset) => {
-  return instance.get(`/comics${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
-}
+  return instance
+    .get(`/comics${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
 
-export default { GetHeroes, GetSeries, GetComics };
+const GetComicsByHeroe = (limit, offset, id) => {
+  return instance
+    .get(`/characters/${id}/comics${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
+export default {
+  GetHeroe,
+  GetHeroes,
+  GetSerie,
+  GetSeries,
+  GetComics,
+  GetComicsByHeroe,
+  GetSeriesByHeroe,
+};

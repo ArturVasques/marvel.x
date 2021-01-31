@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <img :src="imageUrl(imgPath, imgExtension)" class="card-img-top" />
+    <router-link class="router-link menu-link" :to="relativePath">
+      <img :src="imageUrl(imgPath, imgExtension)" class="card-img-top" />
+    </router-link>
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
       <p class="card-text">
@@ -15,16 +17,18 @@ export default {
   props: {
     imgPath: { default: "", type: String },
     imgExtension: { default: "", type: String },
+    imgQuality: { default: "standard_medium", type: String },
     title: { default: "", type: String },
     description: { default: "", type: String },
+    relativePath: { default: "", type: String },
   },
   methods: {
     imageUrl(path, extension) {
       if (path === "" || extension === "") {
         return "";
       }
-      const imgSize = "standard_medium." + extension;
-      return `${path}/${imgSize}`;
+      const imgVariant = `${this.imgQuality}.${extension}`;
+      return `${path}/${imgVariant}`;
     },
     getDescription(description) {
       if (!description) {
@@ -42,5 +46,8 @@ export default {
 .card {
   height: 100%;
   text-align: center;
+}
+.card img:hover {
+  cursor: pointer;
 }
 </style>

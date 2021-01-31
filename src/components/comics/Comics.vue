@@ -1,4 +1,5 @@
 <template>
+  <Title title="Comics" />
   <div class="row">
     <div class="col-3 mb-5" v-for="comic in comics" :key="comic.id">
       <Card
@@ -23,10 +24,18 @@
 import api from "../../api/axios";
 import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
+import Title from "../ui/Title";
 export default {
+  props: {
+    heroeId: {
+      default: null,
+      type: String,
+    },
+  },
   components: {
     Card,
     Pagination,
+    Title,
   },
   data() {
     return {
@@ -38,9 +47,12 @@ export default {
     };
   },
   mounted() {
-    this.getComics();
+    this.initComics();
   },
   methods: {
+    initComics() {
+      this.heroeId ? this.getComicsByHeroe(this.heroeId) : this.getComics();
+    },
     getComics() {
       this.$store.commit("loaderOn");
       api.GetComics(this.limit, this.offset).then((res) => {
@@ -49,9 +61,17 @@ export default {
         this.total = res.data.total;
       });
     },
+    getComicsByHeroe(id) {
+      this.$store.commit("loaderOn");
+      api.GetComicsByHeroe(this.limit, this.offset, id).then((res) => {
+        this.$store.commit("loaderOff");
+        this.comics = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
-      this.getComics();
+      this.initComics();
     },
   },
 };
