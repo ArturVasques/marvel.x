@@ -46,6 +46,7 @@ export default {
       api.GetHeroes(this.limit, this.offset).then((res) => {
         this.$store.commit("loaderOff");
         this.heroes = res.data.results;
+        console.log(res.data.results);
         this.total = res.data.total;
       });
     },

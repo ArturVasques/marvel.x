@@ -66,8 +66,9 @@ export default {
     limit: Number,
     buttons: Number,
   },
-  mounted() {
-    this.pages = Math.ceil(this.total / this.limit);
+  created() {
+    this.setPages();
+    this.setCurrentPage();
   },
   computed: {
     currentPages() {
@@ -88,6 +89,23 @@ export default {
     },
   },
   methods: {
+    setPages() {
+      this.pages = Math.ceil(this.total / this.limit);
+    },
+    setCurrentPage() {
+      const page = parseInt(this.$route.query.page);
+      if (!page) {
+        return;
+      }
+      if (page > this.pages) {
+        this.page = this.pages;
+      } else if (page < 1) {
+        this.page = 1;
+      } else {
+        this.page = page;
+      }
+      this.setOffset();
+    },
     selectFirstPage() {
       this.page = 1;
       this.setOffset();
@@ -115,10 +133,14 @@ export default {
     setOffset() {
       const offset = this.page * this.limit - this.limit;
       this.scrollToTop();
+      this.changePageOnUrl();
       this.$emit("offset", offset);
     },
     isActive(currentPage) {
       return currentPage === this.page;
+    },
+    changePageOnUrl() {
+      this.$router.push({ query: { page: this.page } });
     },
     scrollToTop() {
       window.scrollTo(0, 0);
