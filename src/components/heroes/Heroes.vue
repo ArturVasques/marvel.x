@@ -42,7 +42,9 @@ export default {
   },
   methods: {
     getHeroes() {
+      this.$store.commit("loaderOn");
       api.GetHeroes(this.limit, this.offset).then((res) => {
+        this.$store.commit("loaderOff");
         this.heroes = res.data.results;
         this.total = res.data.total;
       });

@@ -42,7 +42,9 @@ export default {
   },
   methods: {
     getComics() {
+      this.$store.commit("loaderOn");
       api.GetComics(this.limit, this.offset).then((res) => {
+        this.$store.commit("loaderOff");
         this.comics = res.data.results;
         this.total = res.data.total;
       });

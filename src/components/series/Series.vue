@@ -42,7 +42,9 @@ export default {
   },
   methods: {
     getSeries() {
+      this.$store.commit("loaderOn");
       api.GetSeries(this.limit, this.offset).then((res) => {
+        this.$store.commit("loaderOff");
         this.series = res.data.results;
         this.total = res.data.total;
       });

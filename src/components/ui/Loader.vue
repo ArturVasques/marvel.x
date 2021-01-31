@@ -1,11 +1,16 @@
 <template>
-  <div class="wrapper d-flex justify-content-center align-items-center">
+  <div class="wrapper d-flex justify-content-center align-items-center" v-if="showLoader">
     <div class="loader"></div>
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    showLoader () {
+      return this.$store.getters.loader;
+    }
+  }
 }
 </script>
 
