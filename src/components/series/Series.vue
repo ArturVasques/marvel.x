@@ -1,19 +1,19 @@
 <template>
   <div class="row">
-    <div class="col-12" v-if="total > 0">
-      <Pagination
-        :total="total"
-        :limit="limit"
-        :buttons="buttons"
-        @offset="newOffset"
-      />
-    </div>
     <div class="col-3 mb-5" v-for="serie in series" :key="serie.id">
       <Card
         :imgPath="serie.thumbnail.path"
         :imgExtension="serie.thumbnail.extension"
         :title="serie.title"
         :description="serie.description"
+      />
+    </div>
+    <div class="col-12" v-if="total > 0">
+      <Pagination
+        :total="total"
+        :limit="limit"
+        :buttons="buttons"
+        @offset="newOffset"
       />
     </div>
   </div>
@@ -43,7 +43,6 @@ export default {
   methods: {
     getSeries() {
       api.GetSeries(this.limit, this.offset).then((res) => {
-        console.log(res);
         this.series = res.data.results;
         this.total = res.data.total;
       });

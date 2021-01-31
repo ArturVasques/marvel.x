@@ -21,8 +21,8 @@ const GetSeries = (limit, offset) => {
   return instance.get(`/series${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
 }
 
-const GetComics = () => {
-  return instance.get(`/comics${keys}`).then( res => res.data);
+const GetComics = (limit, offset) => {
+  return instance.get(`/comics${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
 }
 
 export default { GetHeroes, GetSeries, GetComics };

@@ -114,10 +114,14 @@ export default {
     },
     setOffset() {
       const offset = this.page * this.limit - this.limit;
+      this.scrollToTop();
       this.$emit("offset", offset);
     },
     isActive(currentPage) {
       return currentPage === this.page;
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
 };

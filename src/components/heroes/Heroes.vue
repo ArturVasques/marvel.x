@@ -1,14 +1,19 @@
 <template>
   <div class="row">
-    <div class="col-12" v-if="total > 0">
-      <Pagination :total="total" :limit="limit" :buttons="buttons" @offset="newOffset"/>
-    </div>
     <div class="col-3 mb-5" v-for="heroe in heroes" :key="heroe.id">
       <Card
         :imgPath="heroe.thumbnail.path"
         :imgExtension="heroe.thumbnail.extension"
         :title="heroe.name"
         :description="heroe.description"
+      />
+    </div>
+    <div class="col-12" v-if="total > 0">
+      <Pagination
+        :total="total"
+        :limit="limit"
+        :buttons="buttons"
+        @offset="newOffset"
       />
     </div>
   </div>
@@ -21,7 +26,7 @@ import Pagination from "../ui/Pagination";
 export default {
   components: {
     Card,
-    Pagination
+    Pagination,
   },
   data() {
     return {
@@ -45,7 +50,7 @@ export default {
     newOffset(value) {
       this.offset = value;
       this.getHeroes();
-    }
+    },
   },
 };
 </script>
