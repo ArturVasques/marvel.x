@@ -13,8 +13,8 @@ const instance = axios.create({
 
 instance.defaults.headers.common["Content-Type"] = "application/json";
 
-const GetHeroes = () => {
-  return instance.get(`/characters${keys}`).then( res => res.data);
+const GetHeroes = (limit, offset) => {
+  return instance.get(`/characters${keys}&limit=${limit}&offset=${offset}`).then( res => res.data);
 };
 
 const GetSeries = () => {
