@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mb-5">
+  <div class="container-fluid mb-4">
     <div class="row header">
       <div class="col-12 text-center">
         <router-link class="router-link" to="/">
