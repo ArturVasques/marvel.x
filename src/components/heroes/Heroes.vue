@@ -1,5 +1,5 @@
 <template>
-  <Title title="Heroes" />
+  <Title title="Heroes" v-if="heroes.length > 0" />
   <div class="row">
     <div class="col-3 mb-5" v-for="heroe in heroes" :key="heroe.id">
       <Card
@@ -29,9 +29,13 @@ import utils from "../../utils";
 import Title from "../ui/Title";
 export default {
   props: {
-    id: {
+    serieId: {
       default: null,
-      type: Number,
+      type: String,
+    },
+    comicId: {
+      default: null,
+      type: String,
     },
   },
   components: {
@@ -49,10 +53,17 @@ export default {
     };
   },
   mounted() {
-    this.getHeroes();
+    this.initSeries();
   },
   methods: {
     getRelativePath: utils.getRelativePath,
+    initSeries() {
+      this.serieId
+        ? this.getHeroesBySerie(this.serieId)
+        : this.comicId
+        ? this.getHeroesByComic(this.comicId)
+        : this.getHeroes();
+    },
     getHeroes() {
       this.$store.commit("loaderOn");
       api.GetHeroes(this.limit, this.offset).then((res) => {
@@ -61,9 +72,25 @@ export default {
         this.total = res.data.total;
       });
     },
+    getHeroesBySerie(id) {
+      this.$store.commit("loaderOn");
+      api.GetHeroesBySerie(this.limit, this.offset, id).then((res) => {
+        this.$store.commit("loaderOff");
+        this.heroes = res.data.results;
+        this.total = res.data.total;
+      });
+    },
+    getHeroesByComic(id) {
+      this.$store.commit("loaderOn");
+      api.GetHeroesByComic(this.limit, this.offset, id).then((res) => {
+        this.$store.commit("loaderOff");
+        this.heroes = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
-      this.getHeroes();
+      this.initSeries();
     },
   },
 };

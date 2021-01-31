@@ -6,6 +6,7 @@ const Heroe = () => import(/* webpackChunkName: "Heroes" */ "../components/heroe
 const Series = () => import(/* webpackChunkName: "Series" */ "../components/series/Series.vue");
 const Serie = () => import(/* webpackChunkName: "Series" */ "../components/series/Serie.vue");
 const Comics = () => import(/* webpackChunkName: "Comics" */ "../components/comics/Comics.vue");
+const Comic = () => import(/* webpackChunkName: "Comics" */ "../components/comics/Comic.vue");
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,7 +16,8 @@ const router = createRouter({
     { path: "/heroes/:id", component: Heroe },
     { path: "/series", component: Series },
     { path: "/series/:id", component: Serie },
-    { path: "/comics", component: Comics }
+    { path: "/comics", component: Comics },
+    { path: "/comics/:id", component: Comic }
   ]
 });
 

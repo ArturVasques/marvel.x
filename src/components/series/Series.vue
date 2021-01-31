@@ -1,5 +1,5 @@
 <template>
-  <Title title="Series" />
+  <Title title="Series" v-if="series.length > 0" />
   <div class="row">
     <div class="col-3 mb-5" v-for="serie in series" :key="serie.id">
       <Card
@@ -8,7 +8,6 @@
         :title="serie.title"
         :description="serie.description"
         :relativePath="getRelativePath('series', serie.id)"
-
       />
     </div>
     <div class="col-12" v-if="total > 0">
@@ -33,7 +32,7 @@ export default {
     heroeId: {
       default: null,
       type: String,
-    },
+    }
   },
   components: {
     Card,
@@ -55,7 +54,9 @@ export default {
   methods: {
     getRelativePath: utils.getRelativePath,
     initSeries() {
-      this.heroeId ? this.getSeriesByHeroe(this.heroeId) : this.getSeries();
+      this.heroeId
+        ? this.getSeriesByHeroe(this.heroeId)
+        : this.getSeries();
     },
     getSeries() {
       this.$store.commit("loaderOn");

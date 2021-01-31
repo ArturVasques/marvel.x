@@ -13,14 +13,30 @@ const instance = axios.create({
 
 instance.defaults.headers.common["Content-Type"] = "application/json";
 
+const GetHeroe = (id) => {
+  return instance.get(`/characters/${id}${keys}`).then((res) => res.data);
+};
+
 const GetHeroes = (limit, offset) => {
   return instance
     .get(`/characters${keys}&limit=${limit}&offset=${offset}`)
     .then((res) => res.data);
 };
 
-const GetHeroe = (id) => {
-  return instance.get(`/characters/${id}${keys}`).then((res) => res.data);
+const GetHeroesBySerie = (limit, offset, id) => {
+  return instance
+    .get(`/series/${id}/characters${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
+const GetHeroesByComic = (limit, offset, id) => {
+  return instance
+    .get(`/comics/${id}/characters${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
+const GetSerie = (id) => {
+  return instance.get(`/series/${id}${keys}`).then((res) => res.data);
 };
 
 const GetSeries = (limit, offset) => {
@@ -29,16 +45,14 @@ const GetSeries = (limit, offset) => {
     .then((res) => res.data);
 };
 
-const GetSerie = (id) => {
-  return instance
-    .get(`/series/${id}${keys}`)
-    .then((res) => res.data);
-};
-
 const GetSeriesByHeroe = (limit, offset, id) => {
   return instance
     .get(`/characters/${id}/series${keys}&limit=${limit}&offset=${offset}`)
     .then((res) => res.data);
+};
+
+const GetComic = (id) => {
+  return instance.get(`/comics/${id}${keys}`).then((res) => res.data);
 };
 
 const GetComics = (limit, offset) => {
@@ -53,12 +67,24 @@ const GetComicsByHeroe = (limit, offset, id) => {
     .then((res) => res.data);
 };
 
+const GetComicsBySerie = (limit, offset, id) => {
+  return instance
+    .get(`/series/${id}/comics${keys}&limit=${limit}&offset=${offset}`)
+    .then((res) => res.data);
+};
+
 export default {
   GetHeroe,
   GetHeroes,
+  GetHeroesBySerie,
+  GetHeroesByComic,
+
   GetSerie,
   GetSeries,
+  GetSeriesByHeroe,
+
+  GetComic,
   GetComics,
   GetComicsByHeroe,
-  GetSeriesByHeroe,
+  GetComicsBySerie,
 };
