@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center" v-if="pages > 1">
     <ul class="pagination">
       <li class="page-item">
         <button
