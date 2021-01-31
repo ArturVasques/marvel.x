@@ -17,6 +17,10 @@ const GetHeroe = (id) => {
   return instance.get(`/characters/${id}${keys}`).then((res) => res.data);
 };
 
+const GetHeroeSearch = (startsWith) => {
+  return instance.get(`/characters${keys}&nameStartsWith=${startsWith}`).then((res) => res.data);
+};
+
 const GetHeroes = (limit, offset) => {
   return instance
     .get(`/characters${keys}&limit=${limit}&offset=${offset}`)
@@ -78,6 +82,8 @@ export default {
   GetHeroes,
   GetHeroesBySerie,
   GetHeroesByComic,
+
+  GetHeroeSearch,
 
   GetSerie,
   GetSeries,

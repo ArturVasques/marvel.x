@@ -1,4 +1,9 @@
 <template>
+  <SearchBar
+    @search="newSearch"
+    placeholder="Search Heroe"
+    v-if="showSearchBar"
+  />
   <Title title="Heroes" v-if="heroes.length > 0" />
   <div class="row">
     <div class="col-3 mb-5" v-for="heroe in heroes" :key="heroe.id">
@@ -27,6 +32,7 @@ import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
 import utils from "../../utils";
 import Title from "../ui/Title";
+import SearchBar from "../ui/SearchBar";
 export default {
   props: {
     serieId: {
@@ -42,6 +48,7 @@ export default {
     Card,
     Pagination,
     Title,
+    SearchBar,
   },
   data() {
     return {
@@ -53,11 +60,11 @@ export default {
     };
   },
   mounted() {
-    this.initSeries();
+    this.initHeroes();
   },
   methods: {
     getRelativePath: utils.getRelativePath,
-    initSeries() {
+    initHeroes() {
       this.serieId
         ? this.getHeroesBySerie(this.serieId)
         : this.comicId
@@ -88,9 +95,27 @@ export default {
         this.total = res.data.total;
       });
     },
+    getHeroeSearch(value) {
+      this.$store.commit("loaderOn");
+      api.GetHeroeSearch(value).then((res) => {
+        this.$store.commit("loaderOff");
+        this.heroes = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
       this.initSeries();
+    },
+    newSearch(value) {
+      if (value && value != "") {
+        this.getHeroeSearch(value);
+      }
+    },
+  },
+  computed: {
+    showSearchBar() {
+      return !this.serieId && !this.comicId;
     },
   },
 };
