@@ -88,6 +88,11 @@ export default {
       return array;
     },
   },
+  watch: {
+    total() {
+      this.setPages();
+    }
+  },
   methods: {
     setPages() {
       this.pages = Math.ceil(this.total / this.limit);
