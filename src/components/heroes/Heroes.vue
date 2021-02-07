@@ -57,6 +57,7 @@ export default {
       limit: 20,
       buttons: 8,
       offset: 0,
+      queryName: this.$route.query.name
     };
   },
   mounted() {
@@ -65,10 +66,13 @@ export default {
   methods: {
     getRelativePath: utils.getRelativePath,
     initHeroes() {
+      console.log('queryName: ', this.queryName);
       this.serieId
         ? this.getHeroesBySerie(this.serieId)
         : this.comicId
         ? this.getHeroesByComic(this.comicId)
+        : this.queryName && this.queryName !== ""
+        ? this.getHeroeByName(this.queryName)
         : this.getHeroes();
     },
     getHeroes() {
@@ -95,7 +99,7 @@ export default {
         this.total = res.data.total;
       });
     },
-    getHeroeSearch(value) {
+    getHeroeByName(value) {
       this.$store.commit("loaderOn");
       api.GetHeroeSearch(value).then((res) => {
         this.$store.commit("loaderOff");
@@ -109,7 +113,7 @@ export default {
     },
     newSearch(value) {
       if (value && value != "") {
-        this.getHeroeSearch(value);
+        this.getHeroeByName(value);
       }
     },
   },
