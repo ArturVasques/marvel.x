@@ -105,7 +105,7 @@ export default {
     },
     newOffset(value) {
       this.offset = value;
-      this.initSeries();
+      this.initHeroes();
     },
     newSearch(value) {
       if (value && value != "") {
