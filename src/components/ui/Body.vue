@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <router-view></router-view>
+        <router-view  :key="$route.path"></router-view>
       </div>
     </div>
   </div>

@@ -45,5 +45,10 @@ export default {
       this.$emit("search", this.search);
     },
   },
+  watch: {
+    searchValue(newValue) {
+      this.search = newValue;
+    }
+  }
 };
 </script>
