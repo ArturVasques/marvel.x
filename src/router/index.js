@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const HomePage = () => import(/* webpackChunkName: "HomePage" */ "../components/homepage/Homepage.vue");
 const Heroes = () => import(/* webpackChunkName: "Heroes" */ "../components/heroes/Heroes.vue");
 const Heroe = () => import(/* webpackChunkName: "Heroes" */ "../components/heroes/Heroe.vue");
 const Series = () => import(/* webpackChunkName: "Series" */ "../components/series/Series.vue");
@@ -11,7 +10,7 @@ const Comic = () => import(/* webpackChunkName: "Comics" */ "../components/comic
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", component: HomePage },
+    { path: "/", component: Heroes },
     { path: "/heroes", component: Heroes },
     { path: "/heroes/:id", component: Heroe },
     { path: "/series", component: Series },
