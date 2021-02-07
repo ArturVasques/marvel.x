@@ -1,5 +1,11 @@
 <template>
-  <Title title="Comics"  v-if="comics.length > 0"/>
+  <SearchBar
+    @search="newSearch"
+    :searchValue="searchValue"
+    placeholder="Search Comic"
+    v-if="showSearchBar"
+  />
+  <Title title="Comics" v-if="comics.length > 0" />
   <div class="row">
     <div class="col-3 mb-5" v-for="comic in comics" :key="comic.id">
       <Card
@@ -27,6 +33,7 @@ import utils from "../../utils";
 import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
 import Title from "../ui/Title";
+import SearchBar from "../ui/SearchBar";
 export default {
   props: {
     heroeId: {
@@ -42,6 +49,7 @@ export default {
     Card,
     Pagination,
     Title,
+    SearchBar,
   },
   data() {
     return {
@@ -50,6 +58,8 @@ export default {
       limit: 20,
       buttons: 8,
       offset: 0,
+      searched: false,
+      searchValue: this.$route.query.name,
     };
   },
   mounted() {
@@ -58,7 +68,9 @@ export default {
   methods: {
     getRelativePath: utils.getRelativePath,
     initComics() {
-      this.heroeId
+      this.searched || this.searchValue && this.searchValue
+        ? this.getComicByName()
+        : this.heroeId
         ? this.getComicsByHeroe(this.heroeId)
         : this.serieId
         ? this.getComicsBySerie(this.serieId)
@@ -88,9 +100,33 @@ export default {
         this.total = res.data.total;
       });
     },
+    getComicByName() {
+      this.$store.commit("loaderOn");
+      api.GetComicSearch(this.searchValue, this.offset).then((res) => {
+        this.$store.commit("loaderOff");
+        this.comics = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
       this.initComics();
+    },
+    newSearch(value) {
+      if (value && value != "") {
+        (this.searched = true), (this.searchValue = value);
+        this.getComicByName();
+        this.changeNameOnUrl();
+      }
+    },
+    changeNameOnUrl() {
+      console.log(this.$router);
+      this.$router.push({ query: { name: this.searchValue } });
+    },
+  },
+  computed: {
+    showSearchBar() {
+      return !this.serieId;
     },
   },
 };

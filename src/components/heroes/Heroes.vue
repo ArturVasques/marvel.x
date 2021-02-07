@@ -1,7 +1,8 @@
 <template>
   <SearchBar
     @search="newSearch"
-    placeholder="Search Heroe"
+    :searchValue="searchValue"
+    placeholder='Search Heroe'
     v-if="showSearchBar"
   />
   <Title title="Heroes" v-if="heroes.length > 0" />
@@ -57,7 +58,8 @@ export default {
       limit: 20,
       buttons: 8,
       offset: 0,
-      queryName: this.$route.query.name
+      searched: false,
+      searchValue: this.$route.query.name
     };
   },
   mounted() {
@@ -66,13 +68,12 @@ export default {
   methods: {
     getRelativePath: utils.getRelativePath,
     initHeroes() {
-      console.log('queryName: ', this.queryName);
-      this.serieId
+      this.searched || this.searchValue && this.searchValue
+        ? this.getHeroeByName()
+        : this.serieId
         ? this.getHeroesBySerie(this.serieId)
         : this.comicId
         ? this.getHeroesByComic(this.comicId)
-        : this.queryName && this.queryName !== ""
-        ? this.getHeroeByName(this.queryName)
         : this.getHeroes();
     },
     getHeroes() {
@@ -99,9 +100,9 @@ export default {
         this.total = res.data.total;
       });
     },
-    getHeroeByName(value) {
+    getHeroeByName() {
       this.$store.commit("loaderOn");
-      api.GetHeroeSearch(value).then((res) => {
+      api.GetHeroeSearch(this.searchValue, this.offset).then((res) => {
         this.$store.commit("loaderOff");
         this.heroes = res.data.results;
         this.total = res.data.total;
@@ -113,8 +114,14 @@ export default {
     },
     newSearch(value) {
       if (value && value != "") {
-        this.getHeroeByName(value);
+        this.searched = true,
+        this.searchValue = value;
+        this.getHeroeByName();
+        this.changeNameOnUrl();
       }
+    },
+    changeNameOnUrl() {
+      this.$router.push({ query: { name: this.searchValue } });
     },
   },
   computed: {

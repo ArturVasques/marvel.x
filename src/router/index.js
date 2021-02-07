@@ -16,9 +16,11 @@ const router = createRouter({
     { path: "/heroes/:id", component: Heroe },
     { path: "/heroes/:name", component: Heroe },
     { path: "/series", component: Series },
-    { path: "/series/:id", component: Serie },
+    { path: "/series/:id:name", component: Serie },
+    { path: "/series/:name", component: Serie },
     { path: "/comics", component: Comics },
-    { path: "/comics/:id", component: Comic }
+    { path: "/comics/:id", component: Comic },
+    { path: "/comics/:name", component: Comic }
   ]
 });
 

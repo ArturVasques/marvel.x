@@ -30,10 +30,14 @@ export default {
       default: "Search",
       type: String,
     },
+    searchValue: {
+      default: "",
+      type: String,
+    }
   },
   data() {
     return {
-      search: "",
+      search: this.searchValue,
     };
   },
   methods: {

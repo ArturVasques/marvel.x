@@ -1,4 +1,10 @@
 <template>
+  <SearchBar
+    @search="newSearch"
+    :searchValue="searchValue"
+    placeholder="Search Heroe"
+    v-if="showSearchBar"
+  />
   <Title title="Series" v-if="series.length > 0" />
   <div class="row">
     <div class="col-3 mb-5" v-for="serie in series" :key="serie.id">
@@ -27,17 +33,19 @@ import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
 import utils from "../../utils";
 import Title from "../ui/Title";
+import SearchBar from "../ui/SearchBar";
 export default {
   props: {
     heroeId: {
       default: null,
       type: String,
-    }
+    },
   },
   components: {
     Card,
     Pagination,
     Title,
+    SearchBar,
   },
   data() {
     return {
@@ -46,6 +54,8 @@ export default {
       limit: 20,
       buttons: 8,
       offset: 0,
+      searched: false,
+      searchValue: this.$route.query.name,
     };
   },
   mounted() {
@@ -54,7 +64,9 @@ export default {
   methods: {
     getRelativePath: utils.getRelativePath,
     initSeries() {
-      this.heroeId
+      this.searched || (this.searchValue && this.searchValue)
+        ? this.getSerieByName()
+        : this.heroeId
         ? this.getSeriesByHeroe(this.heroeId)
         : this.getSeries();
     },
@@ -74,9 +86,32 @@ export default {
         this.total = res.data.total;
       });
     },
+    getSerieByName() {
+      this.$store.commit("loaderOn");
+      api.GetSerieSearch(this.searchValue, this.offset).then((res) => {
+        this.$store.commit("loaderOff");
+        this.series = res.data.results;
+        this.total = res.data.total;
+      });
+    },
     newOffset(value) {
       this.offset = value;
       this.initSeries();
+    },
+    newSearch(value) {
+      if (value && value != "") {
+        (this.searched = true), (this.searchValue = value);
+        this.getSerieByName();
+        this.changeNameOnUrl();
+      }
+    },
+    changeNameOnUrl() {
+      this.$router.push({ query: { name: this.searchValue } });
+    },
+  },
+  computed: {
+    showSearchBar() {
+      return !this.heroeId;
     },
   },
 };

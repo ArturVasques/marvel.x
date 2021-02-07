@@ -89,7 +89,8 @@ export default {
     },
   },
   watch: {
-    total() {
+    total(newValue) {
+      console.log('newValue: ', newValue)
       this.setPages();
     }
   },

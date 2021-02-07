@@ -55,6 +55,10 @@ const GetSeriesByHeroe = (limit, offset, id) => {
     .then((res) => res.data);
 };
 
+const GetSerieSearch = (startsWith) => {
+  return instance.get(`/series${keys}&titleStartsWith=${startsWith}`).then((res) => res.data);
+};
+
 const GetComic = (id) => {
   return instance.get(`/comics/${id}${keys}`).then((res) => res.data);
 };
@@ -77,20 +81,25 @@ const GetComicsBySerie = (limit, offset, id) => {
     .then((res) => res.data);
 };
 
+const GetComicSearch = (startsWith) => {
+  return instance.get(`/comics${keys}&titleStartsWith=${startsWith}`).then((res) => res.data);
+};
+
 export default {
   GetHeroe,
   GetHeroes,
   GetHeroesBySerie,
   GetHeroesByComic,
-
   GetHeroeSearch,
 
   GetSerie,
   GetSeries,
   GetSeriesByHeroe,
+  GetSerieSearch,
 
   GetComic,
   GetComics,
   GetComicsByHeroe,
   GetComicsBySerie,
+  GetComicSearch
 };
