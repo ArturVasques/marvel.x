@@ -4,22 +4,16 @@
     :imageUrl="imageUrl(heroe)"
     :description="heroe.description"
   />
-  <Comics :heroeId="heroeId" v-if="heroeId" />
-  <Series :heroeId="heroeId" v-if="heroeId" />
 </template>
 
 <script>
 import api from "../../api/axios";
 import utils from "../../utils";
 import FullDescription from "../ui/FullDescription";
-import Comics from "../comics/Comics";
-import Series from "../series/Series";
 
 export default {
   components: {
-    FullDescription,
-    Comics,
-    Series,
+    FullDescription
   },
   data() {
     return {

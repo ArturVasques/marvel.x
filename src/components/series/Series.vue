@@ -35,12 +35,6 @@ import utils from "../../utils";
 import Title from "../ui/Title";
 import SearchBar from "../ui/SearchBar";
 export default {
-  props: {
-    heroeId: {
-      default: null,
-      type: String,
-    },
-  },
   components: {
     Card,
     Pagination,
@@ -66,21 +60,11 @@ export default {
     initSeries() {
       this.searched || (this.searchValue && this.searchValue)
         ? this.getSerieByName()
-        : this.heroeId
-        ? this.getSeriesByHeroe(this.heroeId)
         : this.getSeries();
     },
     getSeries() {
       this.$store.commit("loaderOn");
       api.GetSeries(this.limit, this.offset).then((res) => {
-        this.$store.commit("loaderOff");
-        this.series = res.data.results;
-        this.total = res.data.total;
-      });
-    },
-    getSeriesByHeroe(id) {
-      this.$store.commit("loaderOn");
-      api.GetSeriesByHeroe(this.limit, this.offset, id).then((res) => {
         this.$store.commit("loaderOff");
         this.series = res.data.results;
         this.total = res.data.total;

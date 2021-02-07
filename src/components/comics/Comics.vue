@@ -35,16 +35,6 @@ import Pagination from "../ui/Pagination";
 import Title from "../ui/Title";
 import SearchBar from "../ui/SearchBar";
 export default {
-  props: {
-    heroeId: {
-      default: null,
-      type: String,
-    },
-    serieId: {
-      default: null,
-      type: String,
-    },
-  },
   components: {
     Card,
     Pagination,
@@ -70,31 +60,11 @@ export default {
     initComics() {
       this.searched || this.searchValue && this.searchValue
         ? this.getComicByName()
-        : this.heroeId
-        ? this.getComicsByHeroe(this.heroeId)
-        : this.serieId
-        ? this.getComicsBySerie(this.serieId)
         : this.getComics();
     },
     getComics() {
       this.$store.commit("loaderOn");
       api.GetComics(this.limit, this.offset).then((res) => {
-        this.$store.commit("loaderOff");
-        this.comics = res.data.results;
-        this.total = res.data.total;
-      });
-    },
-    getComicsByHeroe(id) {
-      this.$store.commit("loaderOn");
-      api.GetComicsByHeroe(this.limit, this.offset, id).then((res) => {
-        this.$store.commit("loaderOff");
-        this.comics = res.data.results;
-        this.total = res.data.total;
-      });
-    },
-    getComicsBySerie(id) {
-      this.$store.commit("loaderOn");
-      api.GetComicsBySerie(this.limit, this.offset, id).then((res) => {
         this.$store.commit("loaderOff");
         this.comics = res.data.results;
         this.total = res.data.total;
@@ -120,7 +90,6 @@ export default {
       }
     },
     changeNameOnUrl() {
-      console.log(this.$router);
       this.$router.push({ query: { name: this.searchValue } });
     },
   },

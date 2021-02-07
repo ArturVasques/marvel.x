@@ -27,18 +27,6 @@ const GetHeroes = (limit, offset) => {
     .then((res) => res.data);
 };
 
-const GetHeroesBySerie = (limit, offset, id) => {
-  return instance
-    .get(`/series/${id}/characters${keys}&limit=${limit}&offset=${offset}`)
-    .then((res) => res.data);
-};
-
-const GetHeroesByComic = (limit, offset, id) => {
-  return instance
-    .get(`/comics/${id}/characters${keys}&limit=${limit}&offset=${offset}`)
-    .then((res) => res.data);
-};
-
 const GetSerie = (id) => {
   return instance.get(`/series/${id}${keys}`).then((res) => res.data);
 };
@@ -46,12 +34,6 @@ const GetSerie = (id) => {
 const GetSeries = (limit, offset) => {
   return instance
     .get(`/series${keys}&limit=${limit}&offset=${offset}`)
-    .then((res) => res.data);
-};
-
-const GetSeriesByHeroe = (limit, offset, id) => {
-  return instance
-    .get(`/characters/${id}/series${keys}&limit=${limit}&offset=${offset}`)
     .then((res) => res.data);
 };
 
@@ -69,18 +51,6 @@ const GetComics = (limit, offset) => {
     .then((res) => res.data);
 };
 
-const GetComicsByHeroe = (limit, offset, id) => {
-  return instance
-    .get(`/characters/${id}/comics${keys}&limit=${limit}&offset=${offset}`)
-    .then((res) => res.data);
-};
-
-const GetComicsBySerie = (limit, offset, id) => {
-  return instance
-    .get(`/series/${id}/comics${keys}&limit=${limit}&offset=${offset}`)
-    .then((res) => res.data);
-};
-
 const GetComicSearch = (startsWith) => {
   return instance.get(`/comics${keys}&titleStartsWith=${startsWith}`).then((res) => res.data);
 };
@@ -88,18 +58,13 @@ const GetComicSearch = (startsWith) => {
 export default {
   GetHeroe,
   GetHeroes,
-  GetHeroesBySerie,
-  GetHeroesByComic,
   GetHeroeSearch,
 
   GetSerie,
   GetSeries,
-  GetSeriesByHeroe,
   GetSerieSearch,
 
   GetComic,
   GetComics,
-  GetComicsByHeroe,
-  GetComicsBySerie,
   GetComicSearch
 };
